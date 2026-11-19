@@ -1,0 +1,15 @@
+#! /usr/bin/env fish
+
+echo "pre-commit: checking format..."
+if not mvn -q -B spotless:check
+  echo "Formatting issues found. Please run the following: mvn spotless:apply"
+  exit 1
+end
+
+echo "pre-commit: running tests..."
+if not mvn -q -B test
+  echo "Testing failed"
+  exit 1
+end
+
+echo "pre-commit: status 200 : OK"
